@@ -28,3 +28,123 @@ code {
 .custom-link:hover {
   color: #387ed1; /* Blue */
 }
+/* Heading Tabs */
+
+.nav-tabs {
+    border-bottom: 1px solid #dee2e6;
+    margin-bottom: 30px;
+}
+
+.nav-tabs .nav-link {
+    border: none;
+    color: #666;
+    font-size: 18px;
+    font-weight: 500;
+    padding: 15px 25px;
+    transition: 0.3s;
+}
+
+.nav-tabs .nav-link:hover {
+    color: #387ed1;
+}
+
+.nav-tabs .nav-link.active {
+    color: #387ed1;
+    border-bottom: 3px solid #387ed1;
+    background-color: white;
+}
+
+
+/* Table */
+
+.table {
+    font-size: 15px;
+    border: 1px solid #dee2e6;
+    margin-bottom: 0;
+}
+
+.table thead th {
+    background: #fafafa;
+    text-align: center;
+    font-weight: 600;
+    color: #444;
+    padding: 18px;
+}
+
+.table td,
+.table th {
+    border: 1px solid #dee2e6;
+    vertical-align: middle;
+    padding: 18px;
+}
+
+.table td:first-child {
+    width: 190px;
+    font-weight: 500;
+    color: #555;
+}
+
+.table td:not(:first-child) {
+    text-align: center;
+}
+
+
+/* Lists inside table */
+
+.table ul {
+    margin: 0;
+    padding-left: 18px;
+}
+
+.table ul li {
+    margin-bottom: 6px;
+}
+
+
+/* Hover */
+
+.table tbody tr:hover {
+    background-color: #fafafa;
+}
+
+
+/* Responsive */
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+
+/* Container */
+
+.container {
+    margin-bottom: 80px;
+}
+.table {
+    border-collapse: collapse;
+}
+
+.table td {
+    color: #666;
+    line-height: 1.7;
+}
+
+.table th:first-child {
+    width: 200px;
+}
+
+.table td:first-child {
+    background: #fcfcfc;
+}
+
+.table thead th {
+    background: #fcfcfc;
+}
+
+.nav-tabs .nav-item {
+    margin-right: 20px;
+}
+
+.nav-tabs .nav-link {
+    border-radius: 0;
+}
