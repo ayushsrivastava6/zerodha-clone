@@ -46,7 +46,7 @@ const BuyActionWindow = ({ uid }) => {
           </fieldset>
 
           <fieldset>
-            <legend>Price</legend>
+            <legend style={{color:'black'}}>Price</legend>
             <input
               type="number"
               name="price"

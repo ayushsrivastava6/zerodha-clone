@@ -841,3 +841,77 @@ hr {
 .action:hover {
   background-color: rgb(212, 212, 212);
 }
+
+.ord-table {
+    width: 100%;
+    margin-top: 30px;
+}
+
+.ord-table table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+}
+
+.ord-table thead tr {
+    border-top: 1px solid #e6e6e6;
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.ord-table th {
+    text-align: left;
+    padding: 16px 12px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #9b9b9b;
+}
+
+.ord-table td {
+    padding: 16px 12px;
+    font-size: 0.95rem;
+    color: #424242;
+    border-bottom: 1px solid #f0f0f0;
+    text-align: left;
+}
+
+.ord-table tbody tr:hover {
+    background-color: #fafafa;
+}
+
+.ord-table {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.ord-table table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto;
+}
+
+.ord-table thead tr {
+    border-top: 1px solid #e6e6e6;
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.ord-table tbody tr {
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.ord-table th {
+    padding: 14px 10px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #9b9b9b;
+    text-align: left;
+}
+
+.ord-table td {
+    padding: 16px 10px;
+    font-size: 0.95rem;
+    color: #424242;
+}
+
+.ord-table tbody tr:hover {
+    background: #fafafa;
+}
