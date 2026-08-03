@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import BuyActionWindow from "./BuyActionWindow";
 
 const GeneralContext = React.createContext({
@@ -7,13 +6,13 @@ const GeneralContext = React.createContext({
   closeBuyWindow: () => {},
 });
 
-export const GeneralContextProvider = (props) => {
+export const GeneralContextProvider = ({ children }) => {
   const [isBuyWindowOpen, setIsBuyWindowOpen] = useState(false);
   const [selectedStockUID, setSelectedStockUID] = useState("");
 
   const handleOpenBuyWindow = (uid) => {
-    setIsBuyWindowOpen(true);
     setSelectedStockUID(uid);
+    setIsBuyWindowOpen(true);
   };
 
   const handleCloseBuyWindow = () => {
@@ -28,8 +27,11 @@ export const GeneralContextProvider = (props) => {
         closeBuyWindow: handleCloseBuyWindow,
       }}
     >
-      {props.children}
-      {isBuyWindowOpen && <BuyActionWindow uid={selectedStockUID} />}
+      {children}
+
+      {isBuyWindowOpen && (
+        <BuyActionWindow uid={selectedStockUID} />
+      )}
     </GeneralContext.Provider>
   );
 };

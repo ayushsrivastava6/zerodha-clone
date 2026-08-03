@@ -1,6 +1,4 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-
+import React, { useState, useContext } from "react";
 import axios from "axios";
 
 import GeneralContext from "./GeneralContext";
@@ -8,22 +6,28 @@ import GeneralContext from "./GeneralContext";
 import "./BuyActionWindow.css";
 
 const BuyActionWindow = ({ uid }) => {
+  const generalContext = useContext(GeneralContext);
+
   const [stockQuantity, setStockQuantity] = useState(1);
   const [stockPrice, setStockPrice] = useState(0.0);
 
-  const handleBuyClick = () => {
-    axios.post("http://localhost:3002/newOrder", {
-      name: uid,
-      qty: stockQuantity,
-      price: stockPrice,
-      mode: "BUY",
-    });
+  const handleBuyClick = async () => {
+    try {
+      await axios.post("http://localhost:3002/newOrder", {
+        name: uid,
+        qty: stockQuantity,
+        price: stockPrice,
+        mode: "BUY",
+      });
 
-    GeneralContext.closeBuyWindow();
+      generalContext.closeBuyWindow();
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const handleCancelClick = () => {
-    GeneralContext.closeBuyWindow();
+    generalContext.closeBuyWindow();
   };
 
   return (
@@ -36,10 +40,11 @@ const BuyActionWindow = ({ uid }) => {
               type="number"
               name="qty"
               id="qty"
-              onChange={(e) => setStockQuantity(e.target.value)}
               value={stockQuantity}
+              onChange={(e) => setStockQuantity(Number(e.target.value))}
             />
           </fieldset>
+
           <fieldset>
             <legend>Price</legend>
             <input
@@ -47,8 +52,8 @@ const BuyActionWindow = ({ uid }) => {
               name="price"
               id="price"
               step="0.05"
-              onChange={(e) => setStockPrice(e.target.value)}
               value={stockPrice}
+              onChange={(e) => setStockPrice(Number(e.target.value))}
             />
           </fieldset>
         </div>
@@ -56,13 +61,15 @@ const BuyActionWindow = ({ uid }) => {
 
       <div className="buttons">
         <span>Margin required ₹140.65</span>
+
         <div>
-          <Link className="btn btn-blue" onClick={handleBuyClick}>
+          <button className="btn btn-blue" onClick={handleBuyClick}>
             Buy
-          </Link>
-          <Link to="" className="btn btn-grey" onClick={handleCancelClick}>
+          </button>
+
+          <button className="btn btn-grey" onClick={handleCancelClick}>
             Cancel
-          </Link>
+          </button>
         </div>
       </div>
     </div>
