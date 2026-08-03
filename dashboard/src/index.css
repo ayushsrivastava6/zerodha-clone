@@ -285,6 +285,7 @@ code {
   font-weight: 400;
   color: rgb(70, 70, 70);
 }
+
 .menu.selected {
   color: rgb(245, 104, 52);
 }
@@ -437,7 +438,6 @@ hr {
 .order-table td.loss {
   color: rgb(250, 118, 78);
 }
-
 
 .row {
   display: flex;
