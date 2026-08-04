@@ -15,6 +15,15 @@ function OpenAccount() {
         >
           Sign up Now
         </button>
+        <p className="mb-4">
+          Already have an Account?
+        </p>
+        <button
+          className="p-2 btn btn-primary fs-5 mb-5 mt-2"
+          style={{ width: "20%", margin: "0 auto" }}
+        >
+          Login
+        </button>
       </div>
     </div>
   );

@@ -1,93 +1,101 @@
-require('dotenv').config();
-const dns = require('dns');
+require("dotenv").config();
+const dns = require("dns");
 
 // Force Node to use Google's Public DNS servers directly
-dns.setServers(['8.8.8.8', '8.8.4.4']);
-dns.setDefaultResultOrder('ipv4first');
+dns.setServers(["8.8.8.8", "8.8.4.4"]);
+dns.setDefaultResultOrder("ipv4first");
+
 const PORT = process.env.PORT || 3002;
 const uri = process.env.MONGO_URL;
 
 const express = require("express");
 const mongoose = require("mongoose");
-const bodyParser=require('body-parser');
-const cors=require('cors');
-const {PositionsModel}=require('./model/PositionsModel');
-const { HoldingsModel } = require('./model/HoldingsModel');
-const {OrdersModel}=require('./model/OrdersModel');
-const app=express();
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
 
-app.use(cors());
-app.use(bodyParser.json());
+const { HoldingsModel } = require("./model/HoldingsModel");
+const { PositionsModel } = require("./model/PositionsModel");
+const { OrdersModel } = require("./model/OrdersModel");
 
-//  app.get('/addPositions',(req,res)=>{
-//    let tempPositions=[
-//    {
-//      product: "CNC",
-//      name: "EVEREADY",
-//      qty: 2,
-//      avg: 316.27,
-//      price: 312.35,
-//      net: "+0.58%",
-//      day: "-1.24%",
-//      isLoss: true,
-//    },
-//    {
-//      product: "CNC",
-//      name: "JUBLFOOD",
-//      qty: 1,
-//      avg: 3124.75,
-//      price: 3082.65,
-//      net: "+10.04%",
-//      day: "-1.35%",
-//      isLoss: true,
-//    },
-//  ]
-//    tempPositions.forEach((item)=>
-//      let newPosition=new PositionsModel({
-//        product: item.product,
-//        name: item.name,
-//        qty: item.qty,
-//        avg: item.avg,
-//        price: item.price,
-//        net: item.net,
-//        day: item.day,
-//        isLoss: item.isLoss,
-//      }
-//      newPosition.save();
-//    });
-//   res.send("Done");
-// })
+// Authentication Routes
+const authRoute = require("./Routes/AuthRoute");
 
-app.get('/allHoldings', async (req,res)=>{
-  let allHoldings=await HoldingsModel.find({});
-  res.json(allHoldings);
-})
-app.get('/allPositions', async (req,res)=>{
-  let allPositions=await PositionsModel.find({});
-  res.json(allPositions);
-})
-app.get("/allOrders", async (req, res) => {
-  let allOrders = await OrdersModel.find({});
-  res.json(allOrders);
+const app = express();
+
+/* ------------------------- Middleware ------------------------- */
+
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
+
+app.use(express.json());
+app.use(cookieParser());
+
+/* ------------------------- Authentication ------------------------- */
+
+app.use("/auth", authRoute);
+
+/* ------------------------- Holdings ------------------------- */
+
+app.get("/allHoldings", async (req, res) => {
+  try {
+    const allHoldings = await HoldingsModel.find({});
+    res.json(allHoldings);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 });
 
-app.post('/newOrder',async(req,res)=>{
-  let newOrder=new OrdersModel({
-    name: req.body.name,
-    qty: req.body.qty,
-    price: req.body.price,
-    mode: req.body.mode,
-  });
+/* ------------------------- Positions ------------------------- */
 
-  newOrder.save();
-  res.send('Order saved');
-})
+app.get("/allPositions", async (req, res) => {
+  try {
+    const allPositions = await PositionsModel.find({});
+    res.json(allPositions);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 
+/* ------------------------- Orders ------------------------- */
 
+app.get("/allOrders", async (req, res) => {
+  try {
+    const allOrders = await OrdersModel.find({});
+    res.json(allOrders);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 
+app.post("/newOrder", async (req, res) => {
+  try {
+    const newOrder = new OrdersModel({
+      name: req.body.name,
+      qty: req.body.qty,
+      price: req.body.price,
+      mode: req.body.mode,
+    });
+
+    await newOrder.save();
+
+    res.status(201).json({
+      message: "Order saved successfully",
+    });
+  } catch (err) {
+    res.status(500).json({
+      message: err.message,
+    });
+  }
+});
+
+/* ------------------------- MongoDB ------------------------- */
 
 mongoose
-  .connect(process.env.MONGO_URL)
+  .connect(uri)
   .then(() => {
     console.log("✅ MongoDB Connected");
 
@@ -96,5 +104,5 @@ mongoose
     });
   })
   .catch((err) => {
-    console.error(err);
+    console.error("MongoDB Connection Error:", err);
   });
