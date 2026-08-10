@@ -25,7 +25,7 @@ function Navbar() {
           <form class="d-flex" role="search">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <Link class="nav-link " aria-current="page" to="/signup">
+                <Link class="nav-link " aria-current="page" to="/signup-page">
                   Signup
                 </Link>
               </li>
